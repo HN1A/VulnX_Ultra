@@ -28,6 +28,7 @@ VulnX Ultra is an advanced web vulnerability scanner and exploitation tool. It s
 git clone https://github.com/HN1A/VulnX_Ultra.git
 cd VulnX_Ultra
 pip install -r requirements.txt
+python VulnX_Ultra.py --help
 ```
 
 
@@ -54,7 +55,7 @@ python VulnX_Ultra.py -u <target_url> [options]
 Available Options
 
 Option	Description
-
+```bash 
 -h, --help	Show help message
 -u URL, --url URL	Target URL to test (e.g., http://example.com/page.php)
 -p PARAM, --param	Parameter to test (default: file)
@@ -93,7 +94,7 @@ Option	Description
 --exploit-rce	Exploit Remote Code Execution (requires --rce)
 --server	External server URL for RFI or RCE exploitation
 --upload	Upload a file (format: local_path:remote_path)
-
+```
 
 
 ---
